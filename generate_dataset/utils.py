@@ -7,8 +7,13 @@ import os
 mp_holistic = mp.solutions.holistic # Holistic model
 mp_drawing = mp.solutions.drawing_utils # Drawing utilities
 
-DATA_PATH = os.path.join('../../MP_Data') 
-actions = np.array(['hello', 'thanks', 'iloveyou'])
+
+
+
+#default 
+DATA_PATH = os.path.join('../MP_Data') 
+
+actions = np.array(['hello','thanks', 'iloveyou'])
 number_sequences = 30
 sequence_length = 30
 
