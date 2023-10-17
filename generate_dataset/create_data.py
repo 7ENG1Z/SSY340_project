@@ -145,9 +145,9 @@ def create_action_fromcamera(DATA_PATH,action,number_sequences,add = False):
 if "__main__" == __name__:
 
 
-    action = 'thanks'
+    action = 'go'
     add = True
-    # create_action_fromcamera(DATA_PATH,action,number_sequences,add)
+    # create_action_fromcamera(DATA_PATH,action,number_sequences)
     create_action_fromcamera(DATA_PATH,action,30,add)
 
 

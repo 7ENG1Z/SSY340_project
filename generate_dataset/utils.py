@@ -11,7 +11,7 @@ mp_drawing = mp.solutions.drawing_utils # Drawing utilities
 
 
 #default 
-DATA_PATH = os.path.join('../MP_Data') 
+DATA_PATH = os.path.join('/home/lizi/Desktop/MP_Data') 
 
 actions = np.array(['hello','thanks', 'iloveyou'])
 number_sequences = 30

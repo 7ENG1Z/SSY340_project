@@ -11,10 +11,11 @@ def loaddata(DATA_PATH):
     label_map = {label: num for num, label in enumerate(actions)}
     #load the dataset in nparray
     sequences, labels = [], []
-    for action in actions:
+    for action in actions:                                                 
         for sequence in np.array(os.listdir(os.path.join(DATA_PATH, action))).astype(int):
             video = []
-            for frame_file in os.listdir(os.path.join(DATA_PATH, action, str(sequence))):
+            files = sorted(os.listdir(os.path.join(DATA_PATH, action, str(sequence))))
+            for frame_file in files:
                 # Check if it's not a video file
                 _, ext = os.path.splitext(frame_file)
                 if ext not in [".mp4", ".avi"]:
