@@ -14,7 +14,7 @@ def loaddata(DATA_PATH):
     for action in actions:                                                 
         for sequence in np.array(os.listdir(os.path.join(DATA_PATH, action))).astype(int):
             video = []
-            files = sorted(os.listdir(os.path.join(DATA_PATH, action, str(sequence))))
+            files = sorted(os.listdir(os.path.join(DATA_PATH, action, str(sequence))), key=lambda x: int(x.split('.')[0]))#changed
             for frame_file in files:
                 # Check if it's not a video file
                 _, ext = os.path.splitext(frame_file)

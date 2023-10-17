@@ -88,59 +88,17 @@ def create_action_fromcamera(DATA_PATH,action,number_sequences,add = False):
         cap.release()
         cv2.destroyAllWindows()
 
-
-# def create_action_from_videos(action, video_files):
-
-#     add_folder(DATA_PATH, action, len(video_files))
-
-#     for sequence, video_file in enumerate(video_files):
-#         cap = cv2.VideoCapture(video_file)
-
-#         # 查询视频的帧率和分辨率
-#         camera_fps = int(cap.get(cv2.CAP_PROP_FPS))
-#         frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-#         frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-
-#         video_path = os.path.join(DATA_PATH, action, str(sequence), f"{action}_{sequence}.mp4")
-#         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-#         out = cv2.VideoWriter(video_path, fourcc, camera_fps, (frame_width, frame_height))
-
-#         frame_num = 0
-#         while True:
-#             ret, frame = cap.read()
-#             if not ret:
-#                 break
-
-#             # Make detections
-#             image, results = mediapipe_detection(frame, holistic)
-
-#             # Draw landmarks
-#             draw_styled_landmarks(image, results)
-
-#             # Show to screen
-#             cv2.imshow('OpenCV Feed', image)
-#             out.write(image)
-
-#             # Export keypoints
-#             keypoints = extract_keypoints(results)
-#             npy_path = os.path.join(DATA_PATH, action, str(sequence), str(frame_num))
-#             np.save(npy_path, keypoints)
-
-#             frame_num += 1
-
-#             # Break gracefully
-#             if cv2.waitKey(10) & 0xFF == ord('q'):
-#                 break
-
-#         cap.release()
-#         out.release()                   
-        
-#     cv2.destroyAllWindows()
-
-# # 使用
-# video_files = ["path_to_video1.mp4", "path_to_video2.mp4", ...]
-# create_action_from_videos('your_action_name', video_files)
-
+def create_action_frompicture(image_path):
+    with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
+        img = cv2.imread(image_path)
+        image, results = mediapipe_detection(img, holistic)
+        keypoints = extract_keypoints(results)
+        # draw_styled_landmarks(image, results)
+        # cv2.imshow('OpenCV Feed', image)
+        # cv2.waitKey(5000)
+        # cv2.destroyAllWindows()
+        npy_path = os.path.splitext(image_path)[0]
+        np.save(npy_path, keypoints)    
 
 if "__main__" == __name__:
 
