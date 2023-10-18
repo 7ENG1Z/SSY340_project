@@ -33,7 +33,7 @@ def create_action_fromcamera(DATA_PATH,action,number_sequences,add = False):
                 l = len(os.listdir(os.path.join(DATA_PATH, action)))
                 video_path = os.path.join(DATA_PATH, action, str(l-number_sequences+sequence),f"{action}_{l-number_sequences+sequence}.mp4")
             else:
-                video_path = os.path.join(DATA_PATH, action, str(sequence),f"{action}_{sequence}.mp4")
+                video_path = os.path.join(DATA_PATH, action, str(sequence),f"{sequence}.mp4")
 
 
             fourcc = cv2.VideoWriter_fourcc(*'mp4v')            

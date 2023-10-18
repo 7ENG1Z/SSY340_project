@@ -1,4 +1,6 @@
 import torch
+import matplotlib.pyplot as plt
+
 
 class TrainModel():
     def __init__(self,model,device,criterion,optimizer):
@@ -6,7 +8,7 @@ class TrainModel():
         self.criterion=criterion
         self.optimizer=optimizer
         self.device=device
-    
+        
 
     def fit(self,num_epochs,train_loader,val_loader):
         print("Start training!")
@@ -73,8 +75,53 @@ class TrainModel():
                 val_acc_sum += acc
         return val_loss_sum/len(val_loader), val_acc_sum/len(val_loader)
     
+    
 
 
+def validation(model,val_loader):
+        val_acc_sum = 0
+        model.eval()
+        with torch.no_grad():
+            for i, (inputs, labels) in enumerate(val_loader):
+            # toGPU
+                outputs = model(inputs)
+                pred_label = torch.argmax(outputs, dim=1)
+                acc= (pred_label == labels).float().mean().item()
+                val_acc_sum += acc
+                
+        return val_acc_sum/len(val_loader)
+
+def show_result(train_losses,train_accs,val_losses,val_accs):
+        # YOUR CODE HERE
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+    #Plot losses in training and validation
+    axes[0].plot((range(1, len(train_losses)+1)), train_losses, label='Training Loss', color='blue', marker = 'o')
+    axes[0].plot((range(1, len(val_losses)+1)), val_losses, label='Validation Loss', color='red', marker = 'x')
+    axes[0].set_xlabel('Epoch')
+    axes[0].set_ylabel('Loss')
+    axes[0].legend()
+    axes[0].set_title('Training and Validation Loss of LSTM')
+
+    #Plot accuracy
+    axes[1].plot((range(1, len(train_accs)+1)), train_accs, label='Training accuracy', color='blue', marker = 'o')
+    axes[1].plot((range(1, len(val_accs)+1)), val_accs, label='Validation accuracy', color='red', marker = 'x')
+    axes[1].set_xlabel('Epoch')
+    axes[1].set_ylabel('Accuracy')
+    axes[1].legend()
+    axes[1].set_title('Training and Validation Accuracy of LSTM')
+
+    plt.tight_layout()
+    plt.show()
+
+    def freeze(self, layer_name):
+        # 冻结指定层
+        for param in getattr(self, layer_name).parameters():
+            param.requires_grad = False
+
+    def unfreeze(self, layer_name):
+        # 解冻指定层
+        for param in getattr(self, layer_name).parameters():
+            param.requires_grad = True
 
 
 
