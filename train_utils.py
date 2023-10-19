@@ -91,7 +91,7 @@ def validation(model,val_loader):
                 
         return val_acc_sum/len(val_loader)
 
-def show_result(train_losses,train_accs,val_losses,val_accs):
+def show_result(train_losses,train_accs,val_losses,val_accs,name):
         # YOUR CODE HERE
     fig, axes = plt.subplots(1, 2, figsize=(12, 4))
     #Plot losses in training and validation
@@ -100,7 +100,7 @@ def show_result(train_losses,train_accs,val_losses,val_accs):
     axes[0].set_xlabel('Epoch')
     axes[0].set_ylabel('Loss')
     axes[0].legend()
-    axes[0].set_title('Training and Validation Loss of LSTM')
+    axes[0].set_title(f'Training and Validation Loss of {name}')
 
     #Plot accuracy
     axes[1].plot((range(1, len(train_accs)+1)), train_accs, label='Training accuracy', color='blue', marker = 'o')
@@ -108,20 +108,10 @@ def show_result(train_losses,train_accs,val_losses,val_accs):
     axes[1].set_xlabel('Epoch')
     axes[1].set_ylabel('Accuracy')
     axes[1].legend()
-    axes[1].set_title('Training and Validation Accuracy of LSTM')
+    axes[1].set_title(f'Training and Validation Accuracy of {name}')
 
     plt.tight_layout()
     plt.show()
-
-    def freeze(self, layer_name):
-        # 冻结指定层
-        for param in getattr(self, layer_name).parameters():
-            param.requires_grad = False
-
-    def unfreeze(self, layer_name):
-        # 解冻指定层
-        for param in getattr(self, layer_name).parameters():
-            param.requires_grad = True
 
 
 
